@@ -1,38 +1,193 @@
 
-:root{--bg:#fbfaf8;--fg:#1a1a1a;--dim:#5c5c5c;--line:#e4e0da;--akzent:#8a5a2b;--karte:#fff}
-@media (prefers-color-scheme:dark){
-  :root{--bg:#14130f;--fg:#f0ede7;--dim:#a09a90;--line:#2c2a25;--akzent:#d8a25e;--karte:#1b1a16}
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap');
+
+:root{
+  --papier:#f7f6f3;
+  --karte:#ffffff;
+  --tinte:#16181d;
+  --gedaempft:#6b6f76;
+  --linie:#e2dfd8;
+  --signal:#4b2bd6;
+  --signal-tinte:#ffffff;
+  --schatten:0 1px 2px rgba(22,24,29,.05),0 8px 24px -16px rgba(22,24,29,.25);
+  --rund:14px;
+  --kat:#3a4a7a;
+  --kat-hell:#a9bcf5;
 }
+@media (prefers-color-scheme:dark){
+  :root{
+    --papier:#131419;
+    --karte:#1a1c22;
+    --tinte:#f1efe9;
+    --gedaempft:#9a9ba3;
+    --linie:#2b2d35;
+    --signal:#a693ff;
+    --signal-tinte:#16181d;
+    --schatten:0 1px 2px rgba(0,0,0,.4),0 10px 30px -18px rgba(0,0,0,.8);
+  }
+}
+
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);
-  font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
-.wrap{max-width:820px;margin:0 auto;padding:0 20px}
-header{border-bottom:1px solid var(--line);padding:22px 0;margin-bottom:36px}
-header .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-.marke{font-weight:700;font-size:19px;letter-spacing:-.02em;text-decoration:none;color:var(--fg)}
-nav a{color:var(--dim);text-decoration:none;margin-left:18px;font-size:14px}
-nav a:hover{color:var(--fg)}
-h1{font-size:31px;line-height:1.25;letter-spacing:-.02em;margin:0 0 10px}
-h2{font-size:20px;margin:34px 0 12px;letter-spacing:-.01em}
-.lead{color:var(--dim);margin:0 0 30px}
-.karten{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
-.karte{background:var(--karte);border:1px solid var(--line);border-radius:12px;
-  overflow:hidden;display:flex;flex-direction:column}
-.karte img{width:100%;aspect-ratio:2/3;object-fit:cover;display:block;background:var(--line)}
-.karte .inhalt{padding:14px 16px 18px}
-.karte h3{font-size:15px;margin:0 0 6px;line-height:1.4}
-.karte a{text-decoration:none;color:var(--fg)}
-.meta{color:var(--dim);font-size:13px}
-article img.held{width:100%;max-width:420px;border-radius:12px;border:1px solid var(--line);
-  display:block;margin:0 0 26px}
-ul.merkmale{padding-left:20px}
-ul.merkmale li{margin:7px 0}
-.cta{display:inline-block;background:var(--akzent);color:#fff;text-decoration:none;
-  padding:13px 22px;border-radius:9px;font-weight:600;margin:8px 0}
-.hinweis{border-left:3px solid var(--line);padding:10px 0 10px 16px;color:var(--dim);
-  font-size:14px;margin:26px 0}
-footer{border-top:1px solid var(--line);margin-top:56px;padding:26px 0 44px;
-  color:var(--dim);font-size:14px}
-footer a{color:var(--dim)}
-.platzhalter{background:#ffe9c7;color:#5b3b06;border-radius:8px;padding:14px 16px;font-size:14px}
-@media (prefers-color-scheme:dark){.platzhalter{background:#3a2c12;color:#f0d9a8}}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--papier);color:var(--tinte);
+  font-family:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:16.5px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.schmal{max-width:760px}
+a{color:inherit}
+img{max-width:100%;display:block}
+
+/* ---------------------------------------------------------------- Kopf */
+.kopf{border-bottom:1px solid var(--linie);position:sticky;top:0;z-index:40;
+  background:color-mix(in srgb,var(--papier) 88%,transparent);
+  backdrop-filter:saturate(180%) blur(12px)}
+.kopf .wrap{display:flex;align-items:center;justify-content:space-between;
+  gap:18px;height:64px}
+.wortmarke{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;
+  font-size:21px;letter-spacing:-.035em;text-decoration:none}
+.wortmarke span{color:var(--signal)}
+.kopf nav{display:flex;gap:20px;font-size:14px}
+.kopf nav a{color:var(--gedaempft);text-decoration:none}
+.kopf nav a:hover{color:var(--tinte)}
+
+/* --------------------------------------------------------------- Titel */
+.buehne{padding:72px 0 44px;border-bottom:1px solid var(--linie)}
+.buehne h1{
+  font-family:"Bricolage Grotesque",sans-serif;font-weight:800;
+  font-size:clamp(38px,7vw,68px);line-height:1.02;letter-spacing:-.04em;
+  margin:0 0 20px;max-width:16ch;
+}
+.buehne p{color:var(--gedaempft);max-width:52ch;margin:0;font-size:17px}
+
+/* --------------------------------------------------------------- Chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:26px 0 0}
+.chip{
+  font:500 13px/1 "Instrument Sans",sans-serif;
+  border:1px solid var(--linie);background:var(--karte);color:var(--tinte);
+  padding:9px 14px;border-radius:999px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.chip::before{content:"";width:9px;height:9px;border-radius:50%;
+  background:var(--punkt,var(--gedaempft))}
+.chip[aria-pressed="true"]{background:var(--tinte);color:var(--papier);
+  border-color:var(--tinte)}
+.chip:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+
+/* --------------------------------------------------------------- Raster */
+.raster{display:grid;gap:20px;padding:34px 0 20px;
+  grid-template-columns:repeat(auto-fill,minmax(248px,1fr))}
+.eintrag{background:var(--karte);border:1px solid var(--linie);
+  border-radius:var(--rund);overflow:hidden;display:flex;flex-direction:column;
+  transition:transform .18s ease,box-shadow .18s ease}
+.eintrag:hover{transform:translateY(-3px);box-shadow:var(--schatten)}
+.eintrag .bild{aspect-ratio:2/3;background:var(--linie);position:relative;
+  display:block;text-decoration:none}
+.eintrag .bild img{width:100%;height:100%;object-fit:cover}
+.eintrag .leer{display:flex;align-items:center;justify-content:center;
+  height:100%;color:var(--gedaempft);font:700 13px/1 "Space Mono",monospace;
+  letter-spacing:.14em}
+.kat-marke{position:absolute;left:10px;top:10px;background:var(--kat);
+  color:#fff;font:700 11px/1 "Space Mono",monospace;letter-spacing:.08em;
+  padding:6px 9px;border-radius:6px;text-transform:uppercase}
+.eintrag .text{padding:15px 16px 8px;flex:1}
+.eintrag h3{font-size:15px;line-height:1.38;margin:0;font-weight:600}
+.eintrag h3 a{text-decoration:none}
+.eintrag h3 a:hover{text-decoration:underline;text-underline-offset:3px}
+.sterne{font:700 12px/1 "Space Mono",monospace;color:var(--gedaempft);
+  margin-top:9px;display:block}
+
+/* ------------------------------------------------------- Preisschild */
+/* Signaturelement: der Amazon-Link sieht aus wie ein Anhaenger am Produkt. */
+.schild{
+  display:flex;align-items:center;gap:12px;text-decoration:none;
+  background:var(--signal);color:var(--signal-tinte);
+  font:600 14px/1 "Instrument Sans",sans-serif;
+  padding:13px 16px 13px 30px;position:relative;
+  border-radius:0 10px 10px 0;
+}
+.schild::before{content:"";position:absolute;left:11px;top:50%;
+  width:9px;height:9px;margin-top:-4.5px;border-radius:50%;
+  background:var(--karte);box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+.schild::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:repeating-linear-gradient(to bottom,var(--karte) 0 4px,transparent 4px 8px)}
+.schild:hover{filter:brightness(1.08)}
+.schild:focus-visible{outline:2px solid var(--tinte);outline-offset:3px}
+.schild .pfeil{margin-left:auto;font-family:"Space Mono",monospace}
+.eintrag .schild{border-radius:0;margin-top:12px}
+
+/* -------------------------------------------------------------- Artikel */
+.pfad{font:400 13px/1 "Space Mono",monospace;color:var(--gedaempft);
+  padding:34px 0 0;letter-spacing:.02em}
+.pfad a{text-decoration:none}
+.artikel{display:grid;gap:38px;grid-template-columns:minmax(0,1fr) 320px;
+  padding:24px 0 10px;align-items:start}
+.artikel h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;
+  font-size:clamp(27px,3.6vw,38px);line-height:1.12;letter-spacing:-.03em;
+  margin:0 0 10px}
+.artikel .marke{color:var(--gedaempft);font-size:15px;margin:0 0 26px}
+.held{border-radius:var(--rund);border:1px solid var(--linie);
+  max-width:440px;background:var(--karte)}
+
+.tafel{position:sticky;top:88px;background:var(--karte);
+  border:1px solid var(--linie);border-radius:var(--rund);overflow:hidden}
+.tafel .oben{padding:18px 18px 14px}
+.tafel .wert{font:700 26px/1 "Bricolage Grotesque",sans-serif;
+  letter-spacing:-.02em}
+.tafel .zeile{display:flex;justify-content:space-between;gap:12px;
+  font-size:14px;color:var(--gedaempft);padding:7px 0;
+  border-bottom:1px dashed var(--linie)}
+.tafel .zeile:last-of-type{border-bottom:0}
+.tafel .zeile b{color:var(--tinte);font-weight:600;text-align:right}
+.tafel code{font:400 12.5px/1 "Space Mono",monospace;color:var(--gedaempft)}
+.tafel .fuss{padding:0 18px 18px}
+.tafel .schild{border-radius:10px;padding-left:30px}
+.kleingedruckt{font-size:12.5px;color:var(--gedaempft);margin:10px 0 0;
+  line-height:1.5}
+
+h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:600;
+  font-size:19px;letter-spacing:-.015em;margin:38px 0 12px}
+ul.merkmale{list-style:none;padding:0;margin:0}
+ul.merkmale li{padding:11px 0 11px 26px;border-bottom:1px solid var(--linie);
+  position:relative;font-size:15.5px}
+ul.merkmale li::before{content:"";position:absolute;left:4px;top:19px;
+  width:8px;height:2px;background:var(--kat)}
+ul.merkmale li:last-child{border-bottom:0}
+
+.hinweis{border:1px solid var(--linie);border-left:3px solid var(--kat);
+  border-radius:0 10px 10px 0;padding:14px 18px;color:var(--gedaempft);
+  font-size:14px;margin:30px 0}
+
+/* -------------------------------------------------------- Mobilleiste */
+.leiste{display:none}
+@media (max-width:860px){
+  .artikel{grid-template-columns:1fr}
+  .tafel{position:static}
+  .leiste{display:block;position:fixed;left:0;right:0;bottom:0;z-index:50;
+    padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+    background:color-mix(in srgb,var(--papier) 92%,transparent);
+    backdrop-filter:blur(12px);border-top:1px solid var(--linie)}
+  .leiste .schild{border-radius:10px;justify-content:center}
+  body.hat-leiste{padding-bottom:88px}
+}
+
+/* ------------------------------------------------------------- Rechtes */
+.rechtstext p{max-width:66ch}
+.platzhalter{background:#fff2d6;color:#5b3b06;border:1px solid #e8cf9f;
+  border-radius:10px;padding:14px 16px;font-size:14px}
+@media (prefers-color-scheme:dark){
+  .platzhalter{background:#3a2c12;color:#f2dcae;border-color:#5a4620}
+}
+
+footer{border-top:1px solid var(--linie);margin-top:64px;padding:30px 0 56px;
+  color:var(--gedaempft);font-size:14px}
+footer a{color:var(--gedaempft)}
+footer .schluss{font-family:"Bricolage Grotesque",sans-serif;font-weight:600;
+  color:var(--tinte);font-size:16px;margin:0 0 8px}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .eintrag:hover{transform:none}
+}

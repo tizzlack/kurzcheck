@@ -23,8 +23,8 @@
   <a class="wortmarke" href="index.html">Kurz<span>check</span></a>
   <nav>
     <a href="index.html">Produkte</a>
-    <a href="impressum.html">Impressum</a>
-    <a href="datenschutz.html">Datenschutz</a>
+    <a class="nur-breit" href="impressum.html">Impressum</a>
+    <a class="nur-breit" href="datenschutz.html">Datenschutz</a>
   </nav>
 </div></header>
 <section class="buehne"><div class="wrap">
@@ -32,6 +32,7 @@
 <p>Alle Angaben stammen direkt von der Produktseite. Keine Preise, keine Versprechen, ein Klick zum Shop.</p>
 </div></section>
 <div class="wrap">
+<div class="chipzeile">
 <div class="chips" role="group" aria-label="Nach Kategorie filtern">
 <button class="chip" type="button" data-kategorie="alle" aria-pressed="true" style="--punkt:var(--tinte)">Alle</button>
 <button class="chip" type="button" data-kategorie="Studio Kopfhörer" aria-pressed="false" style="--punkt:#7A3B2E">Studio Kopfhörer</button>
@@ -40,7 +41,7 @@
 <button class="chip" type="button" data-kategorie="MIDI Controller" aria-pressed="false" style="--punkt:#7A3B2E">MIDI Controller</button>
 <button class="chip" type="button" data-kategorie="Studiomonitore" aria-pressed="false" style="--punkt:#6A4A16">Studiomonitore</button>
 <button class="chip" type="button" data-kategorie="Akustik Absorber" aria-pressed="false" style="--punkt:#7A3B2E">Akustik Absorber</button>
-</div>
+</div></div>
 <div class="raster">
 <article class="eintrag" data-eintrag="Studio Kopfhörer" style="--kat:#7A3B2E;--kat-hell:#F0A88F">
 <a class="bild" href="produkt/B0016MNAAI.html">
@@ -245,6 +246,7 @@
         var zeigen = wahl === 'alle' || e.getAttribute('data-eintrag') === wahl;
         e.hidden = !zeigen;
       });
+      chip.scrollIntoView({block:'nearest', inline:'center', behavior:'smooth'});
     });
   });
 })();

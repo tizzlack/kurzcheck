@@ -13,6 +13,7 @@
   --rund:14px;
   --kat:#3a4a7a;
   --kat-hell:#a9bcf5;
+  --rand:18px;
 }
 @media (prefers-color-scheme:dark){
   :root{
@@ -27,165 +28,212 @@
   }
 }
 
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+*{box-sizing:border-box;min-width:0}
+html{-webkit-text-size-adjust:100%;overflow-x:hidden}
 body{
   margin:0;background:var(--papier);color:var(--tinte);
   font-family:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  font-size:16.5px;line-height:1.6;
+  font-size:16px;line-height:1.6;overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
 }
-.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
-.schmal{max-width:760px}
 a{color:inherit}
-img{max-width:100%;display:block}
+/* height:auto ist Pflicht: die Bilder tragen width/height-Attribute, sonst
+   werden sie beim Skalieren verzerrt. */
+img{max-width:100%;height:auto;display:block}
+
+.wrap{width:100%;max-width:1240px;margin:0 auto;padding:0 var(--rand)}
+.schmal{max-width:720px}
 
 /* ---------------------------------------------------------------- Kopf */
 .kopf{border-bottom:1px solid var(--linie);position:sticky;top:0;z-index:40;
-  background:color-mix(in srgb,var(--papier) 88%,transparent);
+  background:color-mix(in srgb,var(--papier) 90%,transparent);
   backdrop-filter:saturate(180%) blur(12px)}
 .kopf .wrap{display:flex;align-items:center;justify-content:space-between;
-  gap:18px;height:64px}
+  gap:12px;height:58px}
 .wortmarke{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;
-  font-size:21px;letter-spacing:-.035em;text-decoration:none}
+  font-size:19px;letter-spacing:-.035em;text-decoration:none;white-space:nowrap}
 .wortmarke span{color:var(--signal)}
-.kopf nav{display:flex;gap:20px;font-size:14px}
+.kopf nav{display:flex;gap:16px;font-size:14px;white-space:nowrap}
 .kopf nav a{color:var(--gedaempft);text-decoration:none}
-.kopf nav a:hover{color:var(--tinte)}
+.kopf nav a:hover,.kopf nav a:focus-visible{color:var(--tinte)}
+/* Rechtliches steht im Fuss - auf schmalen Geraeten wuerde es die Kopfzeile
+   ueber den Bildschirmrand schieben. */
+.nur-breit{display:none}
 
-/* --------------------------------------------------------------- Titel */
-.buehne{padding:72px 0 44px;border-bottom:1px solid var(--linie)}
+/* --------------------------------------------------------------- Buehne */
+.buehne{padding:40px 0 26px;border-bottom:1px solid var(--linie)}
 .buehne h1{
   font-family:"Bricolage Grotesque",sans-serif;font-weight:800;
-  font-size:clamp(38px,7vw,68px);line-height:1.02;letter-spacing:-.04em;
-  margin:0 0 20px;max-width:16ch;
+  font-size:clamp(29px,6.4vw,58px);line-height:1.06;letter-spacing:-.035em;
+  margin:0 0 12px;max-width:18ch;text-wrap:balance;
 }
-.buehne p{color:var(--gedaempft);max-width:52ch;margin:0;font-size:17px}
+.buehne p{color:var(--gedaempft);max-width:54ch;margin:0;font-size:15.5px}
 
 /* --------------------------------------------------------------- Chips */
-.chips{display:flex;flex-wrap:wrap;gap:8px;padding:26px 0 0}
+.chipzeile{position:relative;margin:0 calc(var(--rand) * -1)}
+.chips{display:flex;gap:8px;padding:20px var(--rand) 4px;
+  overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.chips::-webkit-scrollbar{display:none}
 .chip{
-  font:500 13px/1 "Instrument Sans",sans-serif;
+  font:500 13px/1 "Instrument Sans",sans-serif;flex:0 0 auto;
   border:1px solid var(--linie);background:var(--karte);color:var(--tinte);
   padding:9px 14px;border-radius:999px;cursor:pointer;
   display:inline-flex;align-items:center;gap:8px;
 }
-.chip::before{content:"";width:9px;height:9px;border-radius:50%;
+.chip::before{content:"";width:8px;height:8px;border-radius:50%;flex:0 0 auto;
   background:var(--punkt,var(--gedaempft))}
 .chip[aria-pressed="true"]{background:var(--tinte);color:var(--papier);
   border-color:var(--tinte)}
 .chip:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
 
 /* --------------------------------------------------------------- Raster */
-.raster{display:grid;gap:20px;padding:34px 0 20px;
-  grid-template-columns:repeat(auto-fill,minmax(248px,1fr))}
+.raster{display:grid;gap:12px;padding:20px 0 8px;
+  grid-template-columns:repeat(2,minmax(0,1fr))}
 .eintrag{background:var(--karte);border:1px solid var(--linie);
   border-radius:var(--rund);overflow:hidden;display:flex;flex-direction:column;
   transition:transform .18s ease,box-shadow .18s ease}
 .eintrag:hover{transform:translateY(-3px);box-shadow:var(--schatten)}
 .eintrag .bild{aspect-ratio:2/3;background:var(--linie);position:relative;
-  display:block;text-decoration:none}
+  display:block;text-decoration:none;overflow:hidden}
 .eintrag .bild img{width:100%;height:100%;object-fit:cover}
 .eintrag .leer{display:flex;align-items:center;justify-content:center;
-  height:100%;color:var(--gedaempft);font:700 13px/1 "Space Mono",monospace;
-  letter-spacing:.14em}
-.kat-marke{position:absolute;left:10px;top:10px;background:var(--kat);
-  color:#fff;font:700 11px/1 "Space Mono",monospace;letter-spacing:.08em;
-  padding:6px 9px;border-radius:6px;text-transform:uppercase}
-.eintrag .text{padding:15px 16px 8px;flex:1}
-.eintrag h3{font-size:15px;line-height:1.38;margin:0;font-weight:600}
+  height:100%;color:var(--gedaempft);font:700 11px/1 "Space Mono",monospace;
+  letter-spacing:.14em;text-align:center;padding:8px}
+.kat-marke{position:absolute;left:8px;top:8px;background:var(--kat);
+  color:#fff;font:700 9.5px/1 "Space Mono",monospace;letter-spacing:.06em;
+  padding:5px 7px;border-radius:5px;text-transform:uppercase;
+  max-width:calc(100% - 16px);overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap}
+.eintrag .text{padding:12px 12px 6px;flex:1}
+.eintrag h3{font-size:14px;line-height:1.35;margin:0;font-weight:600;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;
+  overflow:hidden}
 .eintrag h3 a{text-decoration:none}
 .eintrag h3 a:hover{text-decoration:underline;text-underline-offset:3px}
-.sterne{font:700 12px/1 "Space Mono",monospace;color:var(--gedaempft);
-  margin-top:9px;display:block}
+.sterne{font:700 11px/1 "Space Mono",monospace;color:var(--gedaempft);
+  margin-top:8px;display:block}
 
 /* ------------------------------------------------------- Preisschild */
 /* Signaturelement: der Amazon-Link sieht aus wie ein Anhaenger am Produkt. */
 .schild{
-  display:flex;align-items:center;gap:12px;text-decoration:none;
+  display:flex;align-items:center;gap:10px;text-decoration:none;
   background:var(--signal);color:var(--signal-tinte);
-  font:600 14px/1 "Instrument Sans",sans-serif;
-  padding:13px 16px 13px 30px;position:relative;
-  border-radius:0 10px 10px 0;
+  font:600 13.5px/1 "Instrument Sans",sans-serif;
+  padding:12px 14px 12px 26px;position:relative;border-radius:0;
+  min-height:44px;
 }
-.schild::before{content:"";position:absolute;left:11px;top:50%;
-  width:9px;height:9px;margin-top:-4.5px;border-radius:50%;
+.schild::before{content:"";position:absolute;left:9px;top:50%;
+  width:8px;height:8px;margin-top:-4px;border-radius:50%;
   background:var(--karte);box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
 .schild::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
   background:repeating-linear-gradient(to bottom,var(--karte) 0 4px,transparent 4px 8px)}
 .schild:hover{filter:brightness(1.08)}
 .schild:focus-visible{outline:2px solid var(--tinte);outline-offset:3px}
 .schild .pfeil{margin-left:auto;font-family:"Space Mono",monospace}
-.eintrag .schild{border-radius:0;margin-top:12px}
+.eintrag .schild{margin-top:10px}
 
 /* -------------------------------------------------------------- Artikel */
-.pfad{font:400 13px/1 "Space Mono",monospace;color:var(--gedaempft);
-  padding:34px 0 0;letter-spacing:.02em}
+.pfad{font:400 12.5px/1 "Space Mono",monospace;color:var(--gedaempft);
+  padding:22px 0 0;letter-spacing:.02em;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap}
 .pfad a{text-decoration:none}
-.artikel{display:grid;gap:38px;grid-template-columns:minmax(0,1fr) 320px;
-  padding:24px 0 10px;align-items:start}
+.artikel{display:grid;gap:26px;grid-template-columns:minmax(0,1fr);
+  padding:18px 0 10px;align-items:start}
 .artikel h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;
-  font-size:clamp(27px,3.6vw,38px);line-height:1.12;letter-spacing:-.03em;
-  margin:0 0 10px}
-.artikel .marke{color:var(--gedaempft);font-size:15px;margin:0 0 26px}
+  font-size:clamp(25px,4.6vw,40px);line-height:1.1;letter-spacing:-.03em;
+  margin:0 0 8px;text-wrap:balance}
+.artikel .marke{color:var(--gedaempft);font-size:14.5px;margin:0 0 6px}
+.artikel .voll{color:var(--gedaempft);font-size:14px;margin:0 0 22px;
+  line-height:1.5}
 .held{border-radius:var(--rund);border:1px solid var(--linie);
-  max-width:440px;background:var(--karte)}
+  width:100%;max-width:400px;background:var(--karte)}
 
-.tafel{position:sticky;top:88px;background:var(--karte);
-  border:1px solid var(--linie);border-radius:var(--rund);overflow:hidden}
-.tafel .oben{padding:18px 18px 14px}
-.tafel .wert{font:700 26px/1 "Bricolage Grotesque",sans-serif;
-  letter-spacing:-.02em}
-.tafel .zeile{display:flex;justify-content:space-between;gap:12px;
-  font-size:14px;color:var(--gedaempft);padding:7px 0;
+.tafel{background:var(--karte);border:1px solid var(--linie);
+  border-radius:var(--rund);overflow:hidden}
+.tafel .oben{padding:16px 16px 12px}
+.tafel .wert{font:700 25px/1 "Bricolage Grotesque",sans-serif;
+  letter-spacing:-.02em;margin-bottom:10px}
+.tafel .zeile{display:flex;justify-content:space-between;gap:10px;
+  font-size:13.5px;color:var(--gedaempft);padding:7px 0;
   border-bottom:1px dashed var(--linie)}
 .tafel .zeile:last-of-type{border-bottom:0}
-.tafel .zeile b{color:var(--tinte);font-weight:600;text-align:right}
-.tafel code{font:400 12.5px/1 "Space Mono",monospace;color:var(--gedaempft)}
-.tafel .fuss{padding:0 18px 18px}
-.tafel .schild{border-radius:10px;padding-left:30px}
-.kleingedruckt{font-size:12.5px;color:var(--gedaempft);margin:10px 0 0;
+.tafel .zeile b{color:var(--tinte);font-weight:600;text-align:right;
+  overflow-wrap:anywhere}
+.tafel code{font:400 12px/1 "Space Mono",monospace;color:var(--gedaempft)}
+.tafel .fuss{padding:0 16px 16px}
+.tafel .schild{border-radius:10px;padding-left:28px}
+.kleingedruckt{font-size:12px;color:var(--gedaempft);margin:10px 0 0;
   line-height:1.5}
 
 h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:600;
-  font-size:19px;letter-spacing:-.015em;margin:38px 0 12px}
+  font-size:18px;letter-spacing:-.015em;margin:32px 0 10px}
 ul.merkmale{list-style:none;padding:0;margin:0}
-ul.merkmale li{padding:11px 0 11px 26px;border-bottom:1px solid var(--linie);
-  position:relative;font-size:15.5px}
-ul.merkmale li::before{content:"";position:absolute;left:4px;top:19px;
+ul.merkmale li{padding:11px 0 11px 24px;border-bottom:1px solid var(--linie);
+  position:relative;font-size:15px;overflow-wrap:anywhere}
+ul.merkmale li::before{content:"";position:absolute;left:2px;top:19px;
   width:8px;height:2px;background:var(--kat)}
 ul.merkmale li:last-child{border-bottom:0}
 
 .hinweis{border:1px solid var(--linie);border-left:3px solid var(--kat);
-  border-radius:0 10px 10px 0;padding:14px 18px;color:var(--gedaempft);
-  font-size:14px;margin:30px 0}
+  border-radius:0 10px 10px 0;padding:13px 16px;color:var(--gedaempft);
+  font-size:13.5px;margin:26px 0}
 
 /* -------------------------------------------------------- Mobilleiste */
-.leiste{display:none}
-@media (max-width:860px){
-  .artikel{grid-template-columns:1fr}
-  .tafel{position:static}
-  .leiste{display:block;position:fixed;left:0;right:0;bottom:0;z-index:50;
-    padding:10px 16px calc(10px + env(safe-area-inset-bottom));
-    background:color-mix(in srgb,var(--papier) 92%,transparent);
-    backdrop-filter:blur(12px);border-top:1px solid var(--linie)}
-  .leiste .schild{border-radius:10px;justify-content:center}
-  body.hat-leiste{padding-bottom:88px}
-}
+.leiste{position:fixed;left:0;right:0;bottom:0;z-index:50;
+  padding:9px var(--rand) calc(9px + env(safe-area-inset-bottom));
+  background:color-mix(in srgb,var(--papier) 94%,transparent);
+  backdrop-filter:blur(12px);border-top:1px solid var(--linie)}
+.leiste .schild{border-radius:10px;justify-content:center;padding-left:28px}
+body.hat-leiste{padding-bottom:84px}
 
 /* ------------------------------------------------------------- Rechtes */
-.rechtstext p{max-width:66ch}
+.rechtstext p{max-width:66ch;overflow-wrap:anywhere}
+.rechtstext h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;
+  letter-spacing:-.03em;font-size:clamp(26px,5vw,36px);margin:16px 0 18px}
 .platzhalter{background:#fff2d6;color:#5b3b06;border:1px solid #e8cf9f;
   border-radius:10px;padding:14px 16px;font-size:14px}
 @media (prefers-color-scheme:dark){
   .platzhalter{background:#3a2c12;color:#f2dcae;border-color:#5a4620}
 }
 
-footer{border-top:1px solid var(--linie);margin-top:64px;padding:30px 0 56px;
-  color:var(--gedaempft);font-size:14px}
+footer{border-top:1px solid var(--linie);margin-top:48px;padding:26px 0 44px;
+  color:var(--gedaempft);font-size:13.5px}
 footer a{color:var(--gedaempft)}
 footer .schluss{font-family:"Bricolage Grotesque",sans-serif;font-weight:600;
   color:var(--tinte);font-size:16px;margin:0 0 8px}
+
+/* ====================================================== ab 600px (Phablet) */
+@media (min-width:600px){
+  :root{--rand:22px}
+  body{font-size:16.5px}
+  .raster{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+  .eintrag h3{font-size:14.5px}
+  .buehne{padding:56px 0 34px}
+}
+
+/* ======================================================= ab 780px (Tablet) */
+@media (min-width:780px){
+  :root{--rand:26px}
+  .nur-breit{display:inline}
+  .chips{flex-wrap:wrap;overflow:visible;padding-bottom:0}
+  .chipzeile{margin:0}
+  .artikel{grid-template-columns:minmax(0,1fr) 290px;gap:32px}
+  .tafel{position:sticky;top:80px}
+  .leiste{display:none}
+  body.hat-leiste{padding-bottom:0}
+  .buehne{padding:68px 0 40px}
+  .eintrag .text{padding:14px 15px 6px}
+  .eintrag h3{font-size:15px}
+  .sterne{font-size:11.5px}
+}
+
+/* ====================================================== ab 1080px (Desktop) */
+@media (min-width:1080px){
+  .raster{grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+  .artikel{grid-template-columns:minmax(0,1fr) 320px;gap:40px}
+  .held{max-width:440px}
+  .buehne{padding:80px 0 46px}
+}
 
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}

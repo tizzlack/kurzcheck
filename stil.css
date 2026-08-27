@@ -14,6 +14,7 @@
   --kat:#3a4a7a;
   --kat-hell:#a9bcf5;
   --rand:18px;
+  --stern:#e0a02c;
 }
 @media (prefers-color-scheme:dark){
   :root{
@@ -25,6 +26,7 @@
     --signal:#a693ff;
     --signal-tinte:#16181d;
     --schatten:0 1px 2px rgba(0,0,0,.4),0 10px 30px -18px rgba(0,0,0,.8);
+    --stern:#f0b846;
   }
 }
 
@@ -112,8 +114,28 @@ img{max-width:100%;height:auto;display:block}
   overflow:hidden}
 .eintrag h3 a{text-decoration:none}
 .eintrag h3 a:hover{text-decoration:underline;text-underline-offset:3px}
-.sterne{font:700 11px/1 "Space Mono",monospace;color:var(--gedaempft);
-  margin-top:8px;display:block}
+/* ------------------------------------------------------------ Bewertung */
+/* Zwei uebereinanderliegende Sternreihen: die untere grau, die obere in
+   Sternfarbe und auf den Bewertungsanteil beschnitten. Damit stimmt auch
+   eine 4,7 optisch, ohne Bilder oder Skripte. */
+.bewertung{display:flex;align-items:center;gap:7px;margin-top:9px;
+  flex-wrap:wrap;line-height:1}
+.sterne-grafik{position:relative;display:inline-block;flex:0 0 auto;
+  font-size:13px;letter-spacing:1.5px;color:var(--linie);
+  font-family:"Instrument Sans",sans-serif}
+.sterne-grafik::before{content:"★★★★★"}
+.sterne-grafik::after{content:"★★★★★";position:absolute;left:0;top:0;
+  width:var(--anteil,0%);overflow:hidden;white-space:nowrap;color:var(--stern)}
+.bewertung .wert-zahl{font:700 12.5px/1 "Space Mono",monospace;
+  color:var(--tinte)}
+.bewertung .anzahl{font:400 11.5px/1 "Space Mono",monospace;
+  color:var(--gedaempft)}
+.nur-vorlesen{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+.tafel .bewertung{gap:9px;margin:0 0 12px}
+.tafel .sterne-grafik{font-size:17px;letter-spacing:2px}
+.tafel .bewertung .wert-zahl{font-size:15px}
 
 /* ------------------------------------------------------- Preisschild */
 /* Signaturelement: der Amazon-Link sieht aus wie ein Anhaenger am Produkt. */
@@ -154,7 +176,7 @@ img{max-width:100%;height:auto;display:block}
   border-radius:var(--rund);overflow:hidden}
 .tafel .oben{padding:16px 16px 12px}
 .tafel .wert{font:700 25px/1 "Bricolage Grotesque",sans-serif;
-  letter-spacing:-.02em;margin-bottom:10px}
+  letter-spacing:-.02em;margin-bottom:6px}
 .tafel .zeile{display:flex;justify-content:space-between;gap:10px;
   font-size:13.5px;color:var(--gedaempft);padding:7px 0;
   border-bottom:1px dashed var(--linie)}

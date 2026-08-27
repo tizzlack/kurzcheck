@@ -90,6 +90,7 @@ img{max-width:100%;height:auto;display:block}
 .raster{display:grid;gap:12px;padding:20px 0 8px;
   grid-template-columns:repeat(2,minmax(0,1fr))}
 .eintrag{background:var(--karte);border:1px solid var(--linie);
+  border-top:3px solid var(--kat);
   border-radius:var(--rund);overflow:hidden;display:flex;flex-direction:column;
   transition:transform .18s ease,box-shadow .18s ease}
 .eintrag:hover{transform:translateY(-3px);box-shadow:var(--schatten)}
@@ -99,11 +100,12 @@ img{max-width:100%;height:auto;display:block}
 .eintrag .leer{display:flex;align-items:center;justify-content:center;
   height:100%;color:var(--gedaempft);font:700 11px/1 "Space Mono",monospace;
   letter-spacing:.14em;text-align:center;padding:8px}
-.kat-marke{position:absolute;left:8px;top:8px;background:var(--kat);
-  color:#fff;font:700 9.5px/1 "Space Mono",monospace;letter-spacing:.06em;
-  padding:5px 7px;border-radius:5px;text-transform:uppercase;
-  max-width:calc(100% - 16px);overflow:hidden;text-overflow:ellipsis;
-  white-space:nowrap}
+/* Die Kategorie sitzt nicht mehr auf dem Bild - dort verdeckte sie die
+   Bildueberschrift. Stattdessen faerbt sie die Oberkante der Kachel und
+   steht als Zeile ueber dem Produktnamen. */
+.kat-marke{display:block;font:700 9.5px/1 "Space Mono",monospace;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--kat);
+  margin:0 0 7px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .eintrag .text{padding:12px 12px 6px;flex:1}
 .eintrag h3{font-size:14px;line-height:1.35;margin:0;font-weight:600;
   display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;
